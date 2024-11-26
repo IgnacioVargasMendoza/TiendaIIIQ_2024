@@ -21,7 +21,7 @@ public class IndexController {
         //como es en template solo debemos de colocar el nombre despues del punto si 
         //hay mas folders debajo de template. En este caso, index esta dentro de template
         //por lo tanto no hay que colocar template antes del nombre del archvo.
-        return "index";
+        return "/index";
     }
     
 }

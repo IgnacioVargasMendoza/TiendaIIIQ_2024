@@ -1,4 +1,3 @@
-
 package com.tienda.service.impl;
 
 import com.tienda.dao.CategoriaDao;
@@ -15,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
-    
-    //Anotacion para inyectar dependencias. En cualquier metodo usado, se inyectara y usara
+
+    //Anotacion para inyectar dependencias obtenidas en la clase categoriaDao
     @Autowired
     private CategoriaDao categoriaDao;
 
@@ -24,17 +23,17 @@ public class CategoriaServiceImpl implements CategoriaService {
     public List<Categoria> getCategorias(boolean activos) {
         //Lista para almacenar todos los registros encontrados en la base de datos
         List<Categoria> lista = categoriaDao.findAll();
-        
+
         //Si hay activos
-        if(activos){
+        if (activos) {
             //Remueva de la lista los elementos donde el atributo activa sea false.
             lista.removeIf(e -> !e.isActivo());
         }
-        
+
         return lista;
     }
-    
-        @Override
+
+    @Override
     @Transactional(readOnly = true)
     public Categoria getCategoria(Categoria categoria) {
         return categoriaDao.findById(categoria.getIdCategoria()).orElse(null);
@@ -51,5 +50,5 @@ public class CategoriaServiceImpl implements CategoriaService {
     public void delete(Categoria categoria) {
         categoriaDao.delete(categoria);
     }
-    
+
 }

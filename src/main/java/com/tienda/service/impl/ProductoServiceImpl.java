@@ -51,4 +51,27 @@ public class ProductoServiceImpl implements ProductoService {
         productoDao.delete(producto);
     }
 
+    /*
+    * Lista de productos con precio entre ordendados por descripción ConsultaAmpliada 
+    * El metodo se puede llamar diferente al método del Dao, sin embargo, se 
+    * utilizar el mismo nombre para ser consistentes con la informacion
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Producto> findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup) {
+        return productoDao.findByPrecioBetweenOrderByDescripcion(precioInf, precioSup);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Producto> metodoJPQL(double precioInf, double precioSup) {
+        return productoDao.metodoJPQL(precioInf, precioSup);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Producto> metodoNativo(double precioInf, double precioSup) {
+        return productoDao.metodoNativo(precioInf, precioSup);
+    }
+
 }

@@ -18,9 +18,11 @@ public class Categoria implements Serializable {
     //Esto lo va a contener todas las clases que implementen serializable
     private static final long serialVersionUID = 1L;
 
-    // @Column(name="id_categoria") Hibernate cuando lee el campo en SQL, lo interpreta como id_categoria aun cuando la declaracion en java no es la misma
-    // @Id, la anotacion de ID se utiliza para indicar que es la llave primaria de la tabla
-    // @GeneratedValue(strategy = GenerationType.IDENTITY), se utiliza porque el id_categoria tiene un atributo de auto_increment el cual se conoce como IDENTITY
+    /* --Significado de anotaciones
+    * @Column(name="id_categoria") cuando Hibernate lee el campo en SQL, lo interpreta como id_categoria aun cuando la declaracion en java no es la misma
+    * @Id, la anotacion de ID se utiliza para indicar que es la llave primaria de la tabla
+    * @GeneratedValue(strategy = GenerationType.IDENTITY), se utiliza porque el id_categoria tiene un atributo de auto_increment el cual se conoce como IDENTITY
+    */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria")
@@ -33,9 +35,11 @@ public class Categoria implements Serializable {
 
     private boolean activo;
 
-    // @JoinColumn = Configura la clave foránea 'id_categoria' en la entidad relacionada.  
-    // - 'insertable=false': Indica que esta columna no será utilizada para insertar nuevos valores.  
-    // - 'updatable=false': Indica que esta columna no será actualizada por esta entidad.
+    /* --Significado anotaciones
+    * @JoinColumn = establece la relacion entre entidades mediante la clave foránea 'id_categoria'   
+    * 'insertable=false': Indica que esta columna no será utilizada para insertar nuevos valores.  
+    * 'updatable=false': Indica que esta columna no será utilizada por actualizar esta entidad.
+    */
     @OneToMany
     @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
     private List<Producto> productos;
