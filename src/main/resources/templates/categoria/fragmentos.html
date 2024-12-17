@@ -30,7 +30,8 @@
                  class="modal fade" 
                  tabindex="-1" 
                  aria-labelledby="exampleModalLabel" 
-                 aria-hidden="true">
+                 aria-hidden="true"
+                 sec:authorize="hasRole('ROLE_ADMIN')">
                 <div class="modal-dialog modal-md">
                     <div class="modal-content">
                         <div class="modal-header bg-info text-white">
@@ -85,12 +86,16 @@
                                             <td>[[${contador.count}]]</td>
                                             <td>[[${categoria.descripcion}]]</td>
                                             <td th:text="${categoria.activo} ? 'Activa' : 'Inactiva'" />
-                                            <td><a th:href="@{/categoria/eliminar/}+${categoria.idCategoria}"
-                                                   class="btn btn-danger">
-                                                    <i class="fas fa-trash"></i> [[#{accion.eliminar}]]</a>
+                                            <td>
+                                                <a th:href="@{/categoria/eliminar/}+${categoria.idCategoria}"
+                                                   class="btn btn-danger" sec:authorize="hasRole('ROLE_ADMIN')">
+                                                    <i class="fas fa-trash">
+                                                    </i> [[#{accion.eliminar}]]</a>
                                                 <a th:href="@{/categoria/modificar/}+${categoria.idCategoria}"
-                                                   class="btn btn-success">
-                                                    <i class="fas fa-pencil"></i> [[#{accion.actualizar}]]</a></td></tr>
+                                                   class="btn btn-success" sec:authorize="hasRole('ROLE_ADMIN')">
+                                                    <i class="fas fa-pencil"></i> [[#{accion.actualizar}]]</a>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

@@ -1,27 +1,41 @@
-
-package com.tienda.controller;
-
+import com.tienda.domain.Item;
+import com.tienda.service.ItemService;
+import com.tienda.service.ProductoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-/**
- *
- * @author Ignac
- */
+
 @Controller
 public class IndexController {
     
-    @RequestMapping("/")
-    public String page(Model model) {
-        
-        //model.addAttribute("attribute", "value");
-        
-        //se colocar el nombre del folder y el nombre del archivo
-        //como es en template solo debemos de colocar el nombre despues del punto si 
-        //hay mas folders debajo de template. En este caso, index esta dentro de template
-        //por lo tanto no hay que colocar template antes del nombre del archvo.
-        return "/index";
-    }
+    @Autowired
+    ProductoService productoService;
     
+    @RequestMapping("/")
+    public String page(Model model) { 
+        var listaProductos = productoService.getProductos(true);
+        model.addAttribute("productos", listaProductos);
+        return "index";
+    }
+	
+	@Autowired
+    private ItemService itemService;
+	
+	@RequestMapping("/refrescarBoton")
+    public ModelAndView refrescarBoton(Model model) { 
+        var lista = itemService.gets();
+        var totalCarritos = 0;
+        var carritoTotalVenta = 0;
+        for (Item i : lista) {
+            totalCarritos += i.getCantidad();
+            carritoTotalVenta += (i.getCantidad() * i.getPrecio());
+        }
+        model.addAttribute("listaItems", lista);
+        model.addAttribute("listaTotal", totalCarritos);
+        model.addAttribute("carritoTotal", carritoTotalVenta);
+        return new ModelAndView("/carrito/fragmentos :: verCarrito");
+    }    
 }
